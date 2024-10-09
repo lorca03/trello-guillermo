@@ -1,7 +1,19 @@
-import type { MetaFunction } from "@remix-run/node";
+import {json, LoaderFunction, type MetaFunction} from "@remix-run/node";
+import {useLoaderData} from "@remix-run/react";
+import {getAllPriorities} from "../models/priority.server";
 
 export const meta: MetaFunction = () => {
-    return [{ title: "Gestor de Tareas" }, { name: "description", content: "Gestión de tareas estilo Trello" }];
+    return [{title: "Gestor de Tareas"}, {name: "description", content: "Gestión de tareas estilo Trello"}];
+};
+
+type LoaderData = {
+    priorities: {id: number; level: string}[];
+};
+
+export const loader: LoaderFunction = async () => {
+    const priorities = await getAllPriorities();
+    console.log("Prioridades:", priorities);
+    return json<LoaderData>({priorities});
 };
 
 export default function Index() {
@@ -9,9 +21,7 @@ export default function Index() {
         <div className="flex h-screen items-center justify-center">
             <div className="flex flex-col items-center gap-8">
                 <header className="flex flex-col items-center gap-5">
-                    <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100">
-                        Bienvenido a tu Gestor de Tareas
-                    </h1>
+                    <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100">Bienvenido a tu Gestor de Tareas</h1>
                     <p className="text-lg text-gray-700 dark:text-gray-200">Organiza tus proyectos de manera efectiva</p>
                 </header>
                 <nav className="flex flex-col items-center gap-4">
@@ -19,7 +29,7 @@ export default function Index() {
                         <li>
                             <a
                                 className="block p-4 rounded-lg border border-gray-200 text-blue-700 hover:underline dark:text-blue-500 dark:border-gray-700"
-                                href="/boards" // Esta ruta podría llevar a la página de tableros
+                                href="/boards"
                             >
                                 Ir a los Tableros
                             </a>

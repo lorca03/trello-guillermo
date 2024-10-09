@@ -1,9 +1,9 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
-import "./tailwind.css";
+import {Links, Meta, Outlet, Scripts, ScrollRestoration} from "@remix-run/react";
+import type {LinksFunction} from "@remix-run/node";
+import "./styles/tailwind.css";
 
 export const links: LinksFunction = () => [
-    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+    {rel: "preconnect", href: "https://fonts.googleapis.com"},
     {
         rel: "preconnect",
         href: "https://fonts.gstatic.com",
@@ -15,7 +15,7 @@ export const links: LinksFunction = () => [
     },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export default function App() {
     return (
         <html lang="en">
             <head>
@@ -24,19 +24,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Meta />
                 <Links />
             </head>
-            <body className="">
-                {children}
+            <body>
+                <Outlet />
                 <ScrollRestoration />
                 <Scripts />
             </body>
         </html>
-    );
-}
-
-export default function App() {
-    return (
-        <Layout>
-            <Outlet />
-        </Layout>
     );
 }
