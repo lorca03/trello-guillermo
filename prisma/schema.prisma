@@ -43,7 +43,6 @@ model Task {
   updatedAt  DateTime @updatedAt
   priorityId Int
   columnId   Int
-  content    String?
   column     Column   @relation(fields: [columnId], references: [id])
   priority   Priority @relation(fields: [priorityId], references: [id])
 }

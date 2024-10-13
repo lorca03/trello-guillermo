@@ -32,7 +32,6 @@ export type Task = {
     title: string;
     createdAt: Date;
     updatedAt: Date;
-    content: string | null;
     priorityId: number;
     columnId: number;
     column: Column;
