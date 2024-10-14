@@ -126,8 +126,6 @@ export default function Board() {
                                                             tasksState[columnIndex].map((task, taskIndex) => (
                                                                 <Draggable key={task.id} draggableId={task.id.toString()} index={taskIndex}>
                                                                     {(provided) => (
-                                                                        console.log(tasksState),
-                                                                        
                                                                         <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                                             <Task key={task.id} task={task} prioritys={prioritys} />
                                                                         </div>

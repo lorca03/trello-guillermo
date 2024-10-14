@@ -1,7 +1,7 @@
 import {Board} from "@prisma/client";
 import {prisma} from "~/lib/db.server";
 
-export async function createBoard(data: {title: string; description: string; userId: number}) {
+export async function createBoard(data: {title: string; userId: number}) {
     return await prisma.board.create({
         data,
     });
@@ -26,11 +26,11 @@ export async function getBoardById(id: number): Promise<Board> {
 export async function getBoardsByUserId(userId: number): Promise<Board[]> {
     return await prisma.board.findMany({
         where: {userId},
-        include: {columns: true},
+        include: {columns: {include: {tasks: true}}},
     });
 }
 
-export async function deleteTask(id: number) {
+export async function deleteBoard(id: number) {
     return await prisma.board.delete({
         where: {id},
     });

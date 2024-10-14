@@ -1,3 +1,4 @@
+import {createBoard, deleteBoard} from "~/models/board.server";
 import {createColumn, deleteColumn, updateColumn} from "~/models/column.server";
 import {createTask, updateTask, deleteTask, reorderTasksInColumn, moveTaskToColumn} from "~/models/task.server";
 
@@ -37,6 +38,13 @@ export const handleBoardActions = async (actionType: any, formData: any) => {
             const targetColumnId = parseInt(formData.get("targetColumnId") as string, 10);
             const targetIndex = parseInt(formData.get("targetIndex") as string, 10);
             return await moveTaskToColumn(taskId, targetColumnId, targetIndex);
+        case "createBoard":
+            const titleBoard = formData.get("title") as string;
+            const userId = parseInt(formData.get("userId") as string, 10);
+            return await createBoard({title: titleBoard, userId});
+        case "deleteBoard":
+            const boardIdDelete = parseInt(formData.get("boardId") as string, 10);
+            return await deleteBoard(boardIdDelete);
         default:
             throw new Error("Acción no válida");
     }
