@@ -43,7 +43,8 @@ model Task {
   updatedAt  DateTime @updatedAt
   priorityId Int
   columnId   Int
-  column     Column   @relation(fields: [columnId], references: [id])
+  orderIndex Int
+  column     Column   @relation(fields: [columnId], references: [id], onDelete: Cascade)
   priority   Priority @relation(fields: [priorityId], references: [id])
 }
 

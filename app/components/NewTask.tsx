@@ -18,39 +18,34 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Input} from "./ui/input";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "./ui/select";
-import {createTask} from "~/models/task.server";
 import {useFetcher} from "@remix-run/react";
+import {Priority} from "~/lib/types";
+import {FormData} from "~/lib/types";
 
-const formSchema = z.object({
+export const formSchema = z.object({
     title: z.string().min(1, "Name is required"),
     priority: z.string().min(1, "Priority is required"),
 });
 
-interface FormData {
-    title: string;
-    priority: string;
-    content: string;
-}
-
-const AlertForm = ({columnId}: {columnId: number}) => {
+const NewTask = ({columnId, prioritys, index}: {columnId: number; prioritys: Priority[]; index: number}) => {
     const fetcher = useFetcher();
     const [isOpen, setIsOpen] = useState(false);
     const form = useForm({
         resolver: zodResolver(formSchema),
-        defaultValues: {title: "", priority: "", content: ""},
+        defaultValues: {title: "", priority: ""},
     });
 
     const onSubmit = (data: FormData) => {
         fetcher.submit(
             {
-            title: data.title,
-            priority: parseInt(data.priority),
-            columnId: columnId,
-            actionType: "create",
+                title: data.title,
+                priority: parseInt(data.priority),
+                columnId: columnId,
+                orderIndex: index,
+                actionType: "create",
             },
-            { method: "post" }
+            {method: "post"}
         );
-        console.log(data);
         setIsOpen(false);
         handleDialogClose(false);
     };
@@ -108,9 +103,11 @@ const AlertForm = ({columnId}: {columnId: number}) => {
                                                 <SelectContent>
                                                     <SelectGroup>
                                                         <SelectLabel>Priority</SelectLabel>
-                                                        <SelectItem value="1">High</SelectItem>
-                                                        <SelectItem value="2">Mid</SelectItem>
-                                                        <SelectItem value="3">Low</SelectItem>
+                                                        {prioritys.map((priority) => (
+                                                            <SelectItem key={priority.id} value={priority.id.toString()}>
+                                                                {priority.level}
+                                                            </SelectItem>
+                                                        ))}
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>
@@ -131,4 +128,4 @@ const AlertForm = ({columnId}: {columnId: number}) => {
     );
 };
 
-export default AlertForm;
+export default NewTask;

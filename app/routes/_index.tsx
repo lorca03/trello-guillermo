@@ -1,19 +1,7 @@
-import {json, LoaderFunction, type MetaFunction} from "@remix-run/node";
-import {useLoaderData} from "@remix-run/react";
-import {getAllPriorities} from "../models/priority.server";
+import type {MetaFunction} from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
     return [{title: "Gestor de Tareas"}, {name: "description", content: "Gestión de tareas estilo Trello"}];
-};
-
-type LoaderData = {
-    priorities: {id: number; level: string}[];
-};
-
-export const loader: LoaderFunction = async () => {
-    const priorities = await getAllPriorities();
-    console.log("Prioridades:", priorities);
-    return json<LoaderData>({priorities});
 };
 
 export default function Index() {
@@ -27,10 +15,7 @@ export default function Index() {
                 <nav className="flex flex-col items-center gap-4">
                     <ul className="flex flex-wrap gap-4">
                         <li>
-                            <a
-                                className="block p-4 rounded-lg border border-gray-200 text-accent hover:underline dark:border-gray-700"
-                                href="/home"
-                            >
+                            <a className="block p-4 rounded-lg border border-gray-200 text-accent hover:underline dark:border-gray-700" href="/home">
                                 Ir a los Tableros
                             </a>
                         </li>

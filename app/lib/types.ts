@@ -35,6 +35,7 @@ export type Task = {
     priorityId: number;
     columnId: number;
     column: Column;
+    orderIndex: number;
     priority: Priority;
 };
 
@@ -43,3 +44,8 @@ export type Priority = {
     level: string;
     tasks: Task[];
 };
+
+export interface FormData {
+    title: string;
+    priority: string;
+}
