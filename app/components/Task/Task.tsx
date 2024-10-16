@@ -1,17 +1,16 @@
 import type {Priority, Task} from "~/lib/types";
 import {Clock, MoreHorizontal, Trash2} from "lucide-react";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "./ui/dropdown-menu";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "../ui/dropdown-menu";
 import {useFetcher} from "@remix-run/react";
-import {Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger} from "./ui/sheet";
-import {Label} from "./ui/label";
-import {Input} from "./ui/input";
-import {Button} from "./ui/button";
+import {Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger} from "../ui/sheet";
+import {Input} from "../ui/input";
+import {Button} from "../ui/button";
 import {useForm} from "react-hook-form";
 import {formSchema} from "./NewTask";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "./ui/form";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "../ui/form";
 import {priorityColors} from "~/lib/utils";
-import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "./ui/select";
+import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "../ui/select";
 import {FormData} from "~/lib/types";
 import {useState} from "react";
 
@@ -43,7 +42,7 @@ const Task = ({task, prioritys}: TaskProps) => {
                 taskId: task.id,
                 title: data.title,
                 priority: parseInt(data.priority),
-                actionType: "edit",
+                actionType: "updateTask",
             },
             {method: "post"}
         );
@@ -54,7 +53,7 @@ const Task = ({task, prioritys}: TaskProps) => {
         fetcher.submit(
             {
                 taskId: task.id,
-                actionType: "delete",
+                actionType: "deleteTask",
             },
             {method: "post"}
         );

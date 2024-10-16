@@ -1,12 +1,10 @@
-import type {MetaFunction} from "@remix-run/node";
+import {MetaFunction, Link} from "@remix-run/react";
 
-export const meta: MetaFunction = () => {
-    return [{title: "Gestor de Tareas"}, {name: "description", content: "Gestión de tareas estilo Trello"}];
-};
+export const meta: MetaFunction = () => [{title: "Gestor de Tareas"}, {name: "description", content: "Gestión de tareas estilo Trello"}];
 
 export default function Index() {
     return (
-        <div className="flex h-screen items-center justify-center">
+        <div className="flex h-screen items-center justify-center min-h-screen bg-gradient-to-br from-foreground to-primary dark:bg-gradient-to-br dark:from-background dark:to-accent p-8 text-text">
             <div className="flex flex-col items-center gap-8">
                 <header className="flex flex-col items-center gap-5">
                     <h1 className="text-4xl font-bold">Bienvenido a tu Gestor de Tareas</h1>
@@ -15,9 +13,14 @@ export default function Index() {
                 <nav className="flex flex-col items-center gap-4">
                     <ul className="flex flex-wrap gap-4">
                         <li>
-                            <a className="block p-4 rounded-lg border border-gray-200 text-accent hover:underline dark:border-gray-700" href="/home">
-                                Ir a los Tableros
-                            </a>
+                            <Link to="/auth/login" className="block p-4 rounded-lg border border-gray-200 text-accent hover:underline dark:border-gray-700">
+                                Iniciar Sesión
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/auth/register" className="block p-4 rounded-lg border border-gray-200 text-accent hover:underline dark:border-gray-700">
+                                Registrarse
+                            </Link>
                         </li>
                     </ul>
                 </nav>

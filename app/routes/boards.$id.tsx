@@ -6,13 +6,13 @@ import {json, useFetcher, useLoaderData, useNavigate} from "@remix-run/react";
 import {ActionFunction, LoaderFunction} from "@remix-run/node";
 import {getBoardById} from "~/models/board.server";
 import type {Board, Priority} from "~/lib/types";
-import Task from "~/components/Task";
+import Task from "~/components/Task/Task";
 import {handleBoardActions} from "../lib/boardActions";
 import {getAllPriorities} from "~/models/priority.server";
 import NewColumn from "~/components/Column/NewColumn";
 import ActionsColumn from "~/components/Column/ActionsColumn";
 import {DragDropContext, Droppable, Draggable} from "@hello-pangea/dnd";
-import NewTask from "~/components/NewTask";
+import NewTask from "~/components/Task/NewTask";
 import {useEffect, useState} from "react";
 
 export const loader: LoaderFunction = async ({params}) => {
@@ -38,15 +38,12 @@ export default function Board() {
     const [tasksState, setTasksState] = useState(board.columns.map((column) => column.tasks));
 
     useEffect(() => {
-        const orderedTasks = board.columns.map((col) => 
-            [...col.tasks].sort((a, b) => a.orderIndex - b.orderIndex)
-        );
+        const orderedTasks = board.columns.map((col) => [...col.tasks].sort((a, b) => a.orderIndex - b.orderIndex));
         setTasksState(orderedTasks);
-      }, [board]);
+    }, [board]);
 
     const handleDragEnd = (result: any) => {
         const {source, destination} = result;
-
         if (!destination) return;
 
         const sourceColumnIndex = board.columns.findIndex((col) => col.id.toString() === source.droppableId);

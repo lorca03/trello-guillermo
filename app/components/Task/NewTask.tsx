@@ -8,16 +8,15 @@ import {
     AlertDialogTitle,
     AlertDialogDescription,
     AlertDialogFooter,
-    AlertDialogAction,
     AlertDialogCancel,
-} from "./ui/alert-dialog";
-import {Button} from "./ui/button";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "./ui/form";
+} from "~/components/ui/alert-dialog";
+import {Button} from "~/components/ui/button";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "~/components/ui/form";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Input} from "./ui/input";
-import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "./ui/select";
+import {Input} from "~/components/ui/input";
+import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "~/components/ui/select";
 import {useFetcher} from "@remix-run/react";
 import {Priority} from "~/lib/types";
 import {FormData} from "~/lib/types";
@@ -42,7 +41,7 @@ const NewTask = ({columnId, prioritys, index}: {columnId: number; prioritys: Pri
                 priority: parseInt(data.priority),
                 columnId: columnId,
                 orderIndex: index,
-                actionType: "create",
+                actionType: "createTask",
             },
             {method: "post"}
         );

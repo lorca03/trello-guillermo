@@ -4,18 +4,25 @@ import {createTask, updateTask, deleteTask, reorderTasksInColumn, moveTaskToColu
 
 export const handleBoardActions = async (actionType: any, formData: any) => {
     switch (actionType) {
-        case "create":
+        case "createBoard":
+            const titleBoard = formData.get("title") as string;
+            const userId = parseInt(formData.get("userId") as string, 10);
+            return await createBoard({title: titleBoard, userId});
+        case "deleteBoard":
+            const boardIdDelete = parseInt(formData.get("boardId") as string, 10);
+            return await deleteBoard(boardIdDelete);
+        case "createTask":
             const title = formData.get("title") as string;
             const priorityId = parseInt(formData.get("priority") as string);
             const columnId = parseInt(formData.get("columnId") as string);
             const orderIndex = parseInt(formData.get("orderIndex") as string);
             return await createTask({title, columnId, priorityId, orderIndex});
-        case "edit":
+        case "updateTask":
             const id = parseInt(formData.get("taskId") as string);
             const newTitle = formData.get("title") as string;
             const newPriorityId = parseInt(formData.get("priority") as string);
             return await updateTask(id, {title: newTitle, priorityId: newPriorityId});
-        case "delete":
+        case "deleteTask":
             const deleteId = parseInt(formData.get("taskId") as string);
             return await deleteTask(deleteId);
         case "createColumn":
@@ -38,13 +45,6 @@ export const handleBoardActions = async (actionType: any, formData: any) => {
             const targetColumnId = parseInt(formData.get("targetColumnId") as string, 10);
             const targetIndex = parseInt(formData.get("targetIndex") as string, 10);
             return await moveTaskToColumn(taskId, targetColumnId, targetIndex);
-        case "createBoard":
-            const titleBoard = formData.get("title") as string;
-            const userId = parseInt(formData.get("userId") as string, 10);
-            return await createBoard({title: titleBoard, userId});
-        case "deleteBoard":
-            const boardIdDelete = parseInt(formData.get("boardId") as string, 10);
-            return await deleteBoard(boardIdDelete);
         default:
             throw new Error("Acción no válida");
     }
