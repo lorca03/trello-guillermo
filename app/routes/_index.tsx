@@ -13,12 +13,12 @@ export default function Index() {
                 <nav className="flex flex-col items-center gap-4">
                     <ul className="flex flex-wrap gap-4">
                         <li>
-                            <Link to="/auth/login" className="block p-4 rounded-lg border border-gray-200 text-accent hover:underline dark:border-gray-700">
+                            <Link to="/auth/login" className="block p-4 rounded-lg border bg-background no-underline hover:scale-105 border-gray-200 text-text dark:border-gray-700">
                                 Iniciar Sesión
                             </Link>
                         </li>
                         <li>
-                            <Link to="/auth/register" className="block p-4 rounded-lg border border-gray-200 text-accent hover:underline dark:border-gray-700">
+                            <Link to="/auth/register" className="block p-4 rounded-lg border bg-background text-text hover:scale-105 border-gray-200 dark:border-gray-700">
                                 Registrarse
                             </Link>
                         </li>
