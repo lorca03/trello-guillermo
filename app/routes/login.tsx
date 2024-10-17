@@ -10,11 +10,15 @@ interface ActionData {
 }
 
 export const action = async ({request}: {request: any}) => {
-    const formData = await request.formData();
-    const email = formData.get("email");
-    const password = formData.get("password");
-    const user = await loginUser(email, password);
-    return setAuthOnResponse(redirect("/home"), user.id.toString());
+    try {
+        const formData = await request.formData();
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const user = await loginUser(email, password);
+        return setAuthOnResponse(redirect("/home"), user.id.toString());
+    } catch (error: any) {
+        return {error: error.message};
+    }
 };
 
 export default function Login() {
@@ -60,7 +64,7 @@ export default function Login() {
                 </Form>
                 <p className="mt-4 text-center text-sm text-gray-600 dark:text-gray-400">
                     Don't have an account?{" "}
-                    <a href="/auth/register" className="text-primary hover:underline">
+                    <a href="/register" className="text-accent hover:underline">
                         Register
                     </a>
                 </p>

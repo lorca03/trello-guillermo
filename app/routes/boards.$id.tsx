@@ -16,17 +16,27 @@ import NewTask from "~/components/Task/NewTask";
 import {useEffect, useState} from "react";
 
 export const loader: LoaderFunction = async ({params}) => {
-    const boardId = parseInt(params.id as string, 10);
-    const board = await getBoardById(boardId);
-    const prioritys = await getAllPriorities();
-    return json({board, prioritys});
+    try {
+        const boardId = parseInt(params.id as string, 10);
+        const board = await getBoardById(boardId);
+        const prioritys = await getAllPriorities();
+        return json({board, prioritys});
+    } catch (error) {
+        console.error("Error in loader:", error);
+        return error;
+    }
 };
 
 export const action: ActionFunction = async ({request}) => {
-    const formData = await request.formData();
-    const actionType = formData.get("actionType") as string;
-    await handleBoardActions(actionType, formData);
-    return "";
+    try {
+        const formData = await request.formData();
+        const actionType = formData.get("actionType") as string;
+        await handleBoardActions(actionType, formData);
+        return "";
+    } catch (error) {
+        console.error("Error in action:", error);
+        return error;
+    }
 };
 
 export default function Board() {

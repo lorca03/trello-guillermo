@@ -12,7 +12,7 @@ import {
 } from "~/components/ui/alert-dialog";
 import {ActionFunction, json, LoaderFunction} from "@remix-run/node";
 import {getBoardsByUserId} from "~/models/board.server";
-import {redirect, useLoaderData} from "@remix-run/react";
+import {useLoaderData} from "@remix-run/react";
 import NewBoard from "~/components/Board/NewBoard";
 import {handleBoardActions} from "~/lib/boardActions";
 import BoardCard from "~/components/Board/Board";
@@ -35,10 +35,15 @@ export const loader: LoaderFunction = async ({request}) => {
 };
 
 export const action: ActionFunction = async ({request}) => {
-    const formData = await request.formData();
-    const actionType = formData.get("actionType") as string;
-    await handleBoardActions(actionType, formData);
-    return "";
+    try {
+        const formData = await request.formData();
+        const actionType = formData.get("actionType") as string;
+        await handleBoardActions(actionType, formData);
+        return "";
+    } catch (error) {
+        console.error("Error in action:", error);
+        return error;
+    }
 };
 
 export default function Home() {
